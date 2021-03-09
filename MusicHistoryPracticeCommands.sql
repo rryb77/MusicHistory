@@ -154,7 +154,13 @@ GROUP BY al.Label, a.ArtistName
 HAVING COUNT(al.Label) > 1
 
 
--- Query to find the album with the longest duration, result should have song title and duration
-SELECT s.Title, s.SongLength
-FROM Song s
+-- Query to find the album with the longest duration, result should have album title and duration
+SELECT al.Title, al.AlbumLength
+FROM Album al
+WHERE al.AlbumLength = (SELECT MAX(al.AlbumLength) FROM Album al)
+
+
+-- Query to find the song with the longest duration, result should have song title and duration
+SELECT s.Title, s.SongLength, al.Title
+FROM Song s LEFT JOIN Album al ON s.AlbumId = al.Id
 WHERE s.SongLength = (SELECT MAX(s.SongLength) FROM Song s)
