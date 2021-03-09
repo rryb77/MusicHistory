@@ -161,6 +161,6 @@ WHERE al.AlbumLength = (SELECT MAX(al.AlbumLength) FROM Album al)
 
 
 -- Query to find the song with the longest duration, result should have song title and duration
-SELECT s.Title, s.SongLength, al.Title
+SELECT s.Title, s.SongLength, al.Title AS "Album"
 FROM Song s LEFT JOIN Album al ON s.AlbumId = al.Id
 WHERE s.SongLength = (SELECT MAX(s.SongLength) FROM Song s)
