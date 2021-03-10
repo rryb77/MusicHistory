@@ -130,9 +130,10 @@ WHERE al.ArtistId = 28
 
 
 -- Query to select how many songs exist for each album
-SELECT COUNT(Song.Id)
-FROM Song
-GROUP BY song.AlbumId
+SELECT COUNT(s.Id) as "Song Count", al.Title
+FROM Song s
+    LEFT JOIN Album al on s.AlbumId = al.id
+GROUP BY al.Title
 
 
 -- Query to select how many songs exist for each artist
@@ -148,10 +149,10 @@ GROUP BY Song.GenreId
 
 
 -- Query to select Artists that have put out records on more than one record label.
-SELECT a.ArtistName
+SELECT count(distinct al.label) as "# of Record Labels", a.ArtistName
 FROM Artist a LEFT JOIN Album al ON a.Id = al.ArtistId
-GROUP BY al.Label, a.ArtistName
-HAVING COUNT(al.Label) > 1
+GROUP BY a.ArtistName
+HAVING COUNT(distinct al.Label) > 1
 
 
 -- Query to find the album with the longest duration, result should have album title and duration
